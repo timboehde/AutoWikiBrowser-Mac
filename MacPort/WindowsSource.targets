@@ -1,0 +1,52 @@
+<Project>
+  <!--
+    Compiles the original AWB source the way a Windows checkout would.
+    The AWB tree mixes LF and CRLF files (SVN "native" line endings), and on Windows they are all CRLF.
+    The engine depends on that: it works on article text with Windows line endings, and multi-line
+    string literals in the source carry those line endings. So before compiling, every <WinSource>
+    file is copied to obj/winsrc/ with:
+      - line endings converted to CRLF
+      - Environment.NewLine pinned to "\r\n" (only 3 uses in the engine, plus a few in tests)
+    The Mac UI converts between CRLF and LF at the edit box.
+  -->
+  <PropertyGroup>
+    <WinSrcDir>$(MSBuildProjectDirectory)/obj/winsrc/</WinSrcDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="@(WinSource->'$(WinSrcDir)%(Link)')" />
+  </ItemGroup>
+
+  <UsingTask TaskName="MakeWindowsSource" TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <OutputDir ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        var newLine = new Regex(@"\b(?:System\.)?Environment\.NewLine\b");
+        int written = 0;
+        foreach (var f in Files)
+        {
+            string dest = Path.Combine(OutputDir, f.GetMetadata("Link"));
+            string text = File.ReadAllText(f.GetMetadata("FullPath"));
+            text = text.Replace("\r\n", "\n").Replace("\n", "\r\n");
+            text = newLine.Replace(text, "\"\\r\\n\"");
+            if (File.Exists(dest) && File.ReadAllText(dest) == text) continue;
+            Directory.CreateDirectory(Path.GetDirectoryName(dest));
+            File.WriteAllText(dest, text, new UTF8Encoding(true));
+            written++;
+        }
+        Log.LogMessage(MessageImportance.Normal, "MakeWindowsSource: " + written + " file(s) updated in " + OutputDir);
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="MakeWindowsSource" BeforeTargets="BeforeBuild;CoreCompile">
+    <MakeWindowsSource Files="@(WinSource)" OutputDir="$(WinSrcDir)" />
+  </Target>
+</Project>

@@ -1,0 +1,116 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="AutoWikiBrowser.Mac.ReplaceSpecialWindow"
+        Title="Advanced find and replace (Replace Special)"
+        Width="1000" Height="640" MinWidth="820" MinHeight="480"
+        WindowStartupLocation="CenterOwner">
+  <DockPanel Margin="12">
+    <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
+      <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+        <Button x:Name="CancelButton" Content="Cancel" IsCancel="True" MinWidth="80" />
+        <Button x:Name="OkButton" Content="Done" IsDefault="True" MinWidth="80" Classes="accent" />
+      </StackPanel>
+      <TextBlock VerticalAlignment="Center" Opacity="0.7" TextWrapping="Wrap" Margin="0,0,12,0"
+                 Text="Rules run top to bottom. A subrule only runs on the text its parent rule matched (for example, inside the templates an “in template” rule finds)." />
+    </DockPanel>
+
+    <Grid ColumnDefinitions="330,12,*">
+      <DockPanel Grid.Column="0">
+        <WrapPanel DockPanel.Dock="Top" Margin="0,0,0,6">
+          <Button x:Name="NewRuleButton" Content="New rule" Margin="0,0,6,6" />
+          <Button x:Name="NewInTemplateButton" Content="New “in template”" Margin="0,0,6,6" />
+          <Button x:Name="NewParamButton" Content="New “template parameter”" Margin="0,0,6,6" />
+        </WrapPanel>
+        <CheckBox x:Name="AsSubruleCheck" DockPanel.Dock="Top" Content="Add new rules as subrules of the selected rule" Margin="0,0,0,6" />
+        <WrapPanel DockPanel.Dock="Bottom" Margin="0,6,0,0">
+          <Button x:Name="DeleteButton" Content="Delete" Margin="0,0,6,0" />
+          <Button x:Name="UpButton" Content="Move up" Margin="0,0,6,0" />
+          <Button x:Name="DownButton" Content="Move down" Margin="0,0,6,0" />
+        </WrapPanel>
+        <Border BorderThickness="1" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" CornerRadius="4">
+          <TreeView x:Name="RuleTree">
+            <TreeView.Styles>
+              <Style Selector="TreeViewItem">
+                <Setter Property="IsExpanded" Value="True" />
+              </Style>
+            </TreeView.Styles>
+            <TreeView.ItemTemplate>
+              <TreeDataTemplate ItemsSource="{Binding Children}">
+                <TextBlock Text="{Binding Display}" />
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+        </Border>
+      </DockPanel>
+
+      <ScrollViewer Grid.Column="2">
+        <StackPanel Spacing="8">
+          <TextBlock x:Name="NothingSelected" Text="Add a rule, or select one on the left to edit it." Opacity="0.7" Margin="0,20" />
+
+          <Grid x:Name="CommonPanel" ColumnDefinitions="Auto,*,Auto" IsVisible="False">
+            <TextBlock Text="Name" VerticalAlignment="Center" Margin="0,0,8,0" />
+            <TextBox Grid.Column="1" x:Name="NameBox" />
+            <CheckBox Grid.Column="2" x:Name="EnabledCheck" Content="Enabled" Margin="12,0,0,0" />
+          </Grid>
+
+          <!-- Rule -->
+          <StackPanel x:Name="RulePanel" Spacing="6" IsVisible="False">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="Apply" VerticalAlignment="Center" />
+              <ComboBox x:Name="RuleTypeBox" Width="200" />
+              <TextBlock Text="up to" VerticalAlignment="Center" Margin="12,0,0,0" />
+              <NumericUpDown x:Name="TimesBox" Minimum="1" Maximum="100" Value="1" Increment="1" FormatString="0" Width="110" />
+              <TextBlock Text="times" VerticalAlignment="Center" />
+            </StackPanel>
+            <TextBlock Text="Replace" FontWeight="SemiBold" Margin="0,6,0,0" />
+            <TextBox x:Name="ReplaceBox" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="54" FontFamily="Menlo, Monaco, monospace" />
+            <TextBlock Text="With" FontWeight="SemiBold" />
+            <TextBox x:Name="WithBox" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="54" FontFamily="Menlo, Monaco, monospace" />
+            <WrapPanel>
+              <CheckBox x:Name="RegexCheck" Content="Regex" Margin="0,0,16,0" />
+              <CheckBox x:Name="CaseCheck" Content="Case sensitive" Margin="0,0,16,0" />
+              <CheckBox x:Name="MultilineCheck" Content="Multiline" Margin="0,0,16,0" />
+              <CheckBox x:Name="SinglelineCheck" Content="Singleline" />
+            </WrapPanel>
+            <TextBlock Text="Only if the text contains" FontWeight="SemiBold" Margin="0,6,0,0" />
+            <TextBox x:Name="IfContainsBox" FontFamily="Menlo, Monaco, monospace" />
+            <TextBlock Text="…and doesn't contain" FontWeight="SemiBold" />
+            <TextBox x:Name="IfNotContainsBox" FontFamily="Menlo, Monaco, monospace" />
+            <WrapPanel>
+              <CheckBox x:Name="IfRegexCheck" Content="Regex" Margin="0,0,16,0" />
+              <CheckBox x:Name="IfCaseCheck" Content="Case sensitive" Margin="0,0,16,0" />
+              <CheckBox x:Name="IfMultilineCheck" Content="Multiline" Margin="0,0,16,0" />
+              <CheckBox x:Name="IfSinglelineCheck" Content="Singleline" />
+            </WrapPanel>
+          </StackPanel>
+
+          <!-- In template -->
+          <StackPanel x:Name="InTemplatePanel" Spacing="6" IsVisible="False">
+            <TextBlock TextWrapping="Wrap" Opacity="0.8"
+                       Text="Finds calls of these templates (any of the names, e.g. a template and its redirects). Its subrules then run on each call." />
+            <TextBlock Text="Template names (one per line)" FontWeight="SemiBold" />
+            <TextBox x:Name="TemplateNamesBox" AcceptsReturn="True" MinHeight="90" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <CheckBox x:Name="RenameTemplateCheck" Content="Also rename the template to" />
+              <TextBox x:Name="RenameTemplateBox" Width="260" />
+            </StackPanel>
+          </StackPanel>
+
+          <!-- Template parameter -->
+          <StackPanel x:Name="ParamPanel" Spacing="6" IsVisible="False">
+            <TextBlock TextWrapping="Wrap" Opacity="0.8"
+                       Text="Renames a template parameter. Use it as a subrule of an “in template” rule." />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="Parameter" VerticalAlignment="Center" Width="110" />
+              <TextBox x:Name="ParamNameBox" Width="260" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="Change name to" VerticalAlignment="Center" Width="110" />
+              <TextBox x:Name="NewParamNameBox" Width="260" />
+            </StackPanel>
+          </StackPanel>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </DockPanel>
+</Window>

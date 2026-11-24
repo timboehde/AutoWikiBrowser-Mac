@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Runs AWB's own unit tests against the Mac engine (WikiFunctions.Core). Test files are linked from
+       ../../AWB/UnitTests; only MiscellaneousTests has a Mac copy, without the WinForms-control tests. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS0618;CS0612;NUnit2005;NUnit2007;NUnit2045</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../WikiFunctions.Core/WikiFunctions.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <WinSource Include="../../AWB/UnitTests/CacheTests.cs" Link="CacheTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/CategoryTests.cs" Link="CategoryTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/CiteTemplateDatesTests.cs" Link="CiteTemplateDatesTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/DiffTests.cs" Link="DiffTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/DynamicRegexTests.cs" Link="DynamicRegexTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/FixCitationTemplatesTests.cs" Link="FixCitationTemplatesTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/FixNonBreakingSpacesTests.cs" Link="FixNonBreakingSpacesTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/FixSyntaxTests.cs" Link="FixSyntaxTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/FootnotesTests.cs" Link="FootnotesTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/FormattingTests.cs" Link="FormattingTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/GenfixesTests.cs" Link="GenfixesTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/LinkTests.cs" Link="LinkTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/Mocks.cs" Link="Mocks.cs" />
+    <WinSource Include="../../AWB/UnitTests/ParserTests.cs" Link="ParserTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/Properties/AssemblyInfo.cs" Link="Properties/AssemblyInfo.cs" />
+    <WinSource Include="../../AWB/UnitTests/RegexAssert.cs" Link="RegexAssert.cs" />
+    <WinSource Include="../../AWB/UnitTests/RegexTests.cs" Link="RegexTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/RetfTests.cs" Link="RetfTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/SorterTests.cs" Link="SorterTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/SummaryTests.cs" Link="SummaryTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/TaggerTests.cs" Link="TaggerTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/TemplateTests.cs" Link="TemplateTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/ToolsTests.cs" Link="ToolsTests.cs" />
+    <WinSource Include="../../AWB/UnitTests/UtilityFunctionTests.cs" Link="UtilityFunctionTests.cs" />
+    <Compile Include="MiscellaneousTests.Mac.cs" />
+    <Compile Include="SettingsTests.Mac.cs" />
+  </ItemGroup>
+  <Import Project="../WindowsSource.targets" />
+</Project>

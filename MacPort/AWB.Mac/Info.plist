@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>AutoWikiBrowser</string>
+    <key>CFBundleDisplayName</key>
+    <string>AutoWikiBrowser</string>
+    <key>CFBundleIdentifier</key>
+    <string>org.autowikibrowser.mac</string>
+    <key>CFBundleExecutable</key>
+    <string>AutoWikiBrowser</string>
+    <key>CFBundleIconFile</key>
+    <string>AutoWikiBrowser</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>6.5.1.1</string>
+    <key>CFBundleVersion</key>
+    <string>6.5.1.1</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>12.0</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.productivity</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>AutoWikiBrowser is free software under the GNU General Public License.</string>
+</dict>
+</plist>

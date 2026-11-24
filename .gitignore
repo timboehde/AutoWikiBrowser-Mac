@@ -1,0 +1,17 @@
+# Only AWB/ (the current AWB code) and MacPort/ are part of this repository.
+/tags/
+/branches/
+/TypoScan/
+/UsageStats/
+/Web/
+
+# build output
+bin/
+obj/
+/MacPort/dist/
+/MacPort/*.log
+/MacPort/test-results.trx
+.DS_Store
+*.user
+.vs/
+.idea/

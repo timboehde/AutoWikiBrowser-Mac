@@ -1,0 +1,38 @@
+# Builds the Mac port and runs AWB's unit tests on every push.
+# Pushing a tag that starts with "mac-v" (e.g. mac-v6.5.1.1-1) also publishes a GitHub release with the app.
+name: Mac build
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Unit tests
+        run: ./MacPort/build.sh test && grep -q "Test Run Successful" MacPort/test.log
+      - name: Build app
+        run: ./MacPort/build.sh && grep -q " 0 Error(s)" MacPort/build.log
+      - name: Package
+        run: ARCH=arm64 ./MacPort/package.sh --zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AutoWikiBrowser-mac
+          path: MacPort/dist/*.zip
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/mac-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" MacPort/AWB.Mac/Info.plist)
+          gh release create "$GITHUB_REF_NAME" MacPort/dist/*.zip \
+            --title "AutoWikiBrowser $VERSION for Mac ($(date +%Y-%m-%d))" \
+            --notes-file MacPort/release-notes.md

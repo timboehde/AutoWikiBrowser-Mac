@@ -1,0 +1,111 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Mac port of the WikiFunctions engine. Source files are linked from ../../AWB/WikiFunctions,
+       so the original Windows tree is untouched. Files here (Shims/) replace Windows-only pieces. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>WikiFunctions</RootNamespace>
+    <AssemblyName>WikiFunctions</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS0618;CS0612;CS1591;SYSLIB0014;SYSLIB0011;SYSLIB0021;SYSLIB0023;CA1416</NoWarn>
+    <DefineConstants>$(DefineConstants);MONO</DefineConstants>
+    <SrcRoot>../../AWB/WikiFunctions/</SrcRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SemanticVersion" Version="2.1.0" />
+    <PackageReference Include="System.CodeDom" Version="8.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <WinSource Include="$(SrcRoot)API/ApiEdit.cs" Link="API/ApiEdit.cs" />
+    <WinSource Include="$(SrcRoot)API/ApiExceptions.cs" Link="API/ApiExceptions.cs" />
+    <WinSource Include="$(SrcRoot)API/IApiEdit.cs" Link="API/IApiEdit.cs" />
+    <WinSource Include="$(SrcRoot)API/PageInfo.cs" Link="API/PageInfo.cs" />
+    <WinSource Include="$(SrcRoot)API/SaveInfo.cs" Link="API/SaveInfo.cs" />
+    <WinSource Include="$(SrcRoot)API/UserInfo.cs" Link="API/UserInfo.cs" />
+    <WinSource Include="$(SrcRoot)Article/Comparers/Comparers.cs" Link="Article/Comparers/Comparers.cs" />
+    <WinSource Include="$(SrcRoot)Article/Comparers/RegexComparers.cs" Link="Article/Comparers/RegexComparers.cs" />
+    <WinSource Include="$(SrcRoot)CheckedBoxItem.cs" Link="CheckedBoxItem.cs" />
+    <WinSource Include="$(SrcRoot)CustomModules/CSharpModuleCompiler.cs" Link="CustomModules/CSharpModuleCompiler.cs" />
+    <WinSource Include="$(SrcRoot)CustomModules/CustomModuleCompiler.cs" Link="CustomModules/CustomModuleCompiler.cs" />
+    <WinSource Include="$(SrcRoot)CustomModules/VbModuleCompiler.cs" Link="CustomModules/VbModuleCompiler.cs" />
+    <WinSource Include="$(SrcRoot)DBScanner/Scanners.cs" Link="DBScanner/Scanners.cs" />
+    <WinSource Include="$(SrcRoot)Diff/Diff.cs" Link="Diff/Diff.cs" />
+    <WinSource Include="$(SrcRoot)Diff/Patch.cs" Link="Diff/Patch.cs" />
+    <WinSource Include="$(SrcRoot)Diff/UnifiedDiff.cs" Link="Diff/UnifiedDiff.cs" />
+    <WinSource Include="$(SrcRoot)Encryption.cs" Link="Encryption.cs" />
+    <WinSource Include="$(SrcRoot)Globals.cs" Link="Globals.cs" />
+    <WinSource Include="$(SrcRoot)KeyComparer.cs" Link="KeyComparer.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/ApiJsonListProviderBase.cs" Link="Lists/Providers/ApiJsonListProviderBase.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/CategoryProviderBase.cs" Link="Lists/Providers/CategoryProviderBase.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/IListProvider.cs" Link="Lists/Providers/IListProvider.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/ListProviderException.cs" Link="Lists/Providers/ListProviderException.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/ListProviders.cs" Link="Lists/Providers/ListProviders.cs" />
+    <WinSource Include="$(SrcRoot)Logging/LoggingBase.cs" Link="Logging/LoggingBase.cs" />
+    <WinSource Include="$(SrcRoot)Logging/LoggingInterface.cs" Link="Logging/LoggingInterface.cs" />
+    <WinSource Include="$(SrcRoot)Logging/TraceManager.cs" Link="Logging/TraceManager.cs" />
+    <WinSource Include="$(SrcRoot)Namespace.cs" Link="Namespace.cs" />
+    <WinSource Include="$(SrcRoot)ObjectCache.cs" Link="ObjectCache.cs" />
+    <WinSource Include="$(SrcRoot)Options.cs" Link="Options.cs" />
+    <WinSource Include="$(SrcRoot)Parse/BoldTitle.cs" Link="Parse/BoldTitle.cs" />
+    <WinSource Include="$(SrcRoot)Parse/CategoryDefaultSort.cs" Link="Parse/CategoryDefaultSort.cs" />
+    <WinSource Include="$(SrcRoot)Parse/CiteTemplates.cs" Link="Parse/CiteTemplates.cs" />
+    <WinSource Include="$(SrcRoot)Parse/FixDates.cs" Link="Parse/FixDates.cs" />
+    <WinSource Include="$(SrcRoot)Parse/FixHeadings.cs" Link="Parse/FixHeadings.cs" />
+    <WinSource Include="$(SrcRoot)Parse/FixSyntax.cs" Link="Parse/FixSyntax.cs" />
+    <WinSource Include="$(SrcRoot)Parse/HideText.cs" Link="Parse/HideText.cs" />
+    <WinSource Include="$(SrcRoot)Parse/MetaDataSorter.cs" Link="Parse/MetaDataSorter.cs" />
+    <WinSource Include="$(SrcRoot)Parse/MultipleIssuesTemplate.cs" Link="Parse/MultipleIssuesTemplate.cs" />
+    <WinSource Include="$(SrcRoot)Parse/Parsers.cs" Link="Parse/Parsers.cs" />
+    <WinSource Include="$(SrcRoot)Parse/References.cs" Link="Parse/References.cs" />
+    <WinSource Include="$(SrcRoot)Parse/RegexReplacement.cs" Link="Parse/RegexReplacement.cs" />
+    <WinSource Include="$(SrcRoot)Parse/SiteMatrix.cs" Link="Parse/SiteMatrix.cs" />
+    <WinSource Include="$(SrcRoot)Parse/SortMetaData.cs" Link="Parse/SortMetaData.cs" />
+    <WinSource Include="$(SrcRoot)Parse/Tagger.cs" Link="Parse/Tagger.cs" />
+    <WinSource Include="$(SrcRoot)Parse/Templates.cs" Link="Parse/Templates.cs" />
+    <WinSource Include="$(SrcRoot)Parse/UnbalancedBrackets.cs" Link="Parse/UnbalancedBrackets.cs" />
+    <WinSource Include="$(SrcRoot)Parse/WikiLinks.cs" Link="Parse/WikiLinks.cs" />
+    <WinSource Include="$(SrcRoot)Plugin/ExtraInterfaces.cs" Link="Plugin/ExtraInterfaces.cs" />
+    <WinSource Include="$(SrcRoot)Plugin/PluginInterfaces.cs" Link="Plugin/PluginInterfaces.cs" />
+    <WinSource Include="$(SrcRoot)Profiler.cs" Link="Profiler.cs" />
+    <WinSource Include="$(SrcRoot)Profiles/AWBProfile.cs" Link="Profiles/AWBProfile.cs" />
+    <WinSource Include="$(SrcRoot)Properties/AssemblyInfo.cs" Link="Properties/AssemblyInfo.cs" />
+    <WinSource Include="$(SrcRoot)SiteInfo.cs" Link="SiteInfo.cs" />
+    <WinSource Include="$(SrcRoot)Summary.cs" Link="Summary.cs" />
+    <WinSource Include="$(SrcRoot)SvnInfo.template.cs" Link="SvnInfo.template.cs" />
+    <WinSource Include="$(SrcRoot)UriChangedException.cs" Link="UriChangedException.cs" />
+    <WinSource Include="$(SrcRoot)UsernameComparer.cs" Link="UsernameComparer.cs" />
+    <WinSource Include="$(SrcRoot)Utils.cs" Link="Utils.cs" />
+    <WinSource Include="$(SrcRoot)Variables.cs" Link="Variables.cs" />
+    <WinSource Include="$(SrcRoot)WikiRegexes.cs" Link="WikiRegexes.cs" />
+    <WinSource Include="$(SrcRoot)API/AsyncApiEdit.cs" Link="API/AsyncApiEdit.cs" />
+    <WinSource Include="$(SrcRoot)Article/Article.cs" Link="Article/Article.cs" />
+    <WinSource Include="$(SrcRoot)Article/Comparers/ArticleComparerFactory.cs" Link="Article/Comparers/ArticleComparerFactory.cs" />
+    <WinSource Include="$(SrcRoot)Background/Background.cs" Link="Background/Background.cs" />
+    <WinSource Include="$(SrcRoot)DBScanner/MainProcess.cs" Link="DBScanner/MainProcess.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/ApiListProviderBase.cs" Link="Lists/Providers/ApiListProviderBase.cs" />
+    <WinSource Include="$(SrcRoot)Logging/AWBLogListener.cs" Link="Logging/AWBLogListener.cs" />
+    <WinSource Include="$(SrcRoot)Parse/RegExTypoFix.cs" Link="Parse/RegExTypoFix.cs" />
+    <WinSource Include="$(SrcRoot)Session.cs" Link="Session.cs" />
+    <WinSource Include="$(SrcRoot)TalkPageFixes.cs" Link="TalkPageFixes.cs" />
+    <WinSource Include="$(SrcRoot)Tools.cs" Link="Tools.cs" />
+    <WinSource Include="$(SrcRoot)AwbDirs.cs" Link="AwbDirs.cs" />
+    <WinSource Include="$(SrcRoot)Updater.cs" Link="Updater.cs" />
+    <WinSource Include="$(SrcRoot)Diff/WikiDiff.cs" Link="Diff/WikiDiff.cs" />
+    <WinSource Include="$(SrcRoot)Lists/Providers/NonMWListProviders.cs" Link="Lists/Providers/NonMWListProviders.cs" />
+    <WinSource Include="$(SrcRoot)ReplaceSpecial/IRule.cs" Link="ReplaceSpecial/IRule.cs" />
+    <WinSource Include="$(SrcRoot)ReplaceSpecial/IRuleControlOwner.cs" Link="ReplaceSpecial/IRuleControlOwner.cs" />
+    <WinSource Include="$(SrcRoot)ReplaceSpecial/Rule.cs" Link="ReplaceSpecial/Rule.cs" />
+    <WinSource Include="$(SrcRoot)ReplaceSpecial/InTemplateRule.cs" Link="ReplaceSpecial/InTemplateRule.cs" />
+    <WinSource Include="$(SrcRoot)ReplaceSpecial/TemplateParamRule.cs" Link="ReplaceSpecial/TemplateParamRule.cs" />
+    <WinSource Include="$(SrcRoot)ReplaceSpecial/RuleFactory.cs" Link="ReplaceSpecial/RuleFactory.cs" />
+    <WinSource Include="$(SrcRoot)SettingsClasses.cs" Link="SettingsClasses.cs" />
+    <Compile Include="Shims/**/*.cs" />
+    <EmbeddedResource Include="$(SrcRoot)Resources/beep11.wav" LogicalName="WikiFunctions.beep.wav" />
+  </ItemGroup>
+  <Import Project="../WindowsSource.targets" />
+</Project>

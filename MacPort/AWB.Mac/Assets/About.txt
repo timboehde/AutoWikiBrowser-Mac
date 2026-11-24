@@ -1,0 +1,13 @@
+AutoWikiBrowser (AWB) comes with ABSOLUTELY NO WARRANTY.
+
+AWB is constantly in development, and there may be bugs in the software. YOU are responsible for what you do with this tool.  Use it at your own risk.
+
+Anyone is free to copy and distribute this software; only users registered on the Wikipedia:AutoWikiBrowser/CheckPageJSON are allowed to use it on the English Wikipedia.  All editing done with it must be allowed under the policies and guidelines of the wiki you are editing.
+
+Copyright (c) 2006-2026 Martin Richards, Max Semenik, Sam Reed and Stephen Kennedy, et al. Please refer to source code headers for author details and copyright claims.
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the license, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301,  USA.

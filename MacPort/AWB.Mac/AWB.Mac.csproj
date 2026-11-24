@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- AutoWikiBrowser for macOS: Avalonia UI on top of the WikiFunctions.Core engine. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>AutoWikiBrowser</AssemblyName>
+    <RootNamespace>AutoWikiBrowser.Mac</RootNamespace>
+    <Version>6.5.1.1</Version>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+    <NoWarn>$(NoWarn);CS0618;CA1416;SYSLIB0014</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets/AutoWikiBrowser.png;Assets/About.txt" />
+    <None Include="Info.plist;Assets/AutoWikiBrowser.icns" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../WikiFunctions.Core/WikiFunctions.Core.csproj" />
+  </ItemGroup>
+</Project>

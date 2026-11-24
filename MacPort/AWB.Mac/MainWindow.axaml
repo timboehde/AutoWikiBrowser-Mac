@@ -1,0 +1,179 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:AutoWikiBrowser.Mac"
+        x:Class="AutoWikiBrowser.Mac.MainWindow"
+        Title="AutoWikiBrowser"
+        Icon="/Assets/AutoWikiBrowser.png"
+        Width="1320" Height="860" MinWidth="960" MinHeight="620"
+        WindowStartupLocation="CenterScreen">
+
+  <DockPanel>
+    <!-- Site and account -->
+    <Border DockPanel.Dock="Top" Padding="10,8" BorderThickness="0,0,0,1"
+            BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}">
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+          <TextBlock x:Name="UserLabel" VerticalAlignment="Center" Text="Not logged in" />
+          <Button x:Name="LoginButton" Content="Log in…" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Site" VerticalAlignment="Center" />
+          <TextBox x:Name="LangBox" Width="70" Text="en" ToolTip.Tip="Language code, e.g. en, de, nl" />
+          <ComboBox x:Name="ProjectBox" Width="150" />
+          <AutoCompleteBox x:Name="WikiAddressBox" Width="320" IsVisible="False" MinimumPrefixLength="0" FilterMode="Contains"
+                           ToolTip.Tip="Paste any page address from the wiki, or its script path, e.g. https://wiki.example.org/w/" />
+          <TextBlock x:Name="FandomSuffix" Text=".fandom.com" VerticalAlignment="Center" IsVisible="False" />
+          <Button x:Name="LoadSiteButton" Content="Switch site" />
+          <TextBlock x:Name="SiteLabel" VerticalAlignment="Center" Opacity="0.7" />
+        </StackPanel>
+      </DockPanel>
+    </Border>
+
+    <!-- Status bar -->
+    <Border DockPanel.Dock="Bottom" Padding="10,5" BorderThickness="0,1,0,0"
+            BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}">
+      <DockPanel>
+        <ProgressBar x:Name="BusyBar" DockPanel.Dock="Right" Width="140" IsIndeterminate="True" IsVisible="False" />
+        <TextBlock x:Name="CountsLabel" DockPanel.Dock="Right" Margin="16,0" VerticalAlignment="Center" Text="Edits: 0  Skipped: 0" />
+        <TextBlock x:Name="StatusLabel" VerticalAlignment="Center" Text="Starting…" TextTrimming="CharacterEllipsis" />
+      </DockPanel>
+    </Border>
+
+    <Grid ColumnDefinitions="330,6,*">
+      <!-- Left: list maker and options -->
+      <DockPanel Grid.Column="0" Margin="10,10,4,10">
+        <StackPanel DockPanel.Dock="Top" Spacing="6">
+          <TextBlock Text="Make list" FontWeight="SemiBold" />
+          <ComboBox x:Name="SourceBox" HorizontalAlignment="Stretch" />
+          <TextBox x:Name="SourceInput" Watermark="Category, page title, search…" />
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <Button x:Name="MakeListButton" Content="Make list" Classes="accent" />
+            <Button x:Name="AddPageButton" Content="Add page" ToolTip.Tip="Add the text above as a single page" />
+          </StackPanel>
+        </StackPanel>
+
+        <TabControl DockPanel.Dock="Bottom" Margin="0,8,0,0" Padding="0,6,0,0">
+          <TabItem Header="Options" FontSize="14">
+            <StackPanel Spacing="4">
+              <CheckBox x:Name="GenFixesCheck" Content="Apply general fixes" IsChecked="True" />
+              <CheckBox x:Name="UnicodifyCheck" Content="Unicodify whole page" IsChecked="True" />
+              <CheckBox x:Name="AutoTagCheck" Content="Auto tag" IsChecked="True" />
+              <CheckBox x:Name="TyposCheck" Content="RegexTypoFix (typo fixing)" />
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <CheckBox x:Name="FarCheck" Content="Find and replace" />
+                <Button x:Name="FarRulesButton" Content="Rules…" Padding="10,2" />
+                <Button x:Name="AdvancedRulesButton" Content="Advanced…" Padding="10,2" ToolTip.Tip="Replace Special rules" />
+              </StackPanel>
+              <CheckBox x:Name="MinorCheck" Content="Mark all edits as minor" />
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Watchlist" VerticalAlignment="Center" />
+                <ComboBox x:Name="WatchBox" Width="190" />
+              </StackPanel>
+            </StackPanel>
+          </TabItem>
+          <TabItem Header="More" FontSize="14">
+            <ScrollViewer MaxHeight="340">
+              <StackPanel Spacing="4" Margin="0,0,12,0">
+                <TextBlock Text="Categories" FontWeight="SemiBold" />
+                <ComboBox x:Name="CatModeBox" HorizontalAlignment="Stretch" />
+                <TextBox x:Name="CatBox1" Watermark="Category (without “Category:”)" />
+                <TextBox x:Name="CatBox2" Watermark="Replace with this category" />
+                <CheckBox x:Name="SkipNoCatCheck" Content="Skip if no category changed" />
+                <CheckBox x:Name="RemoveSortKeyCheck" Content="Remove sort key" />
+
+                <TextBlock Text="Files" FontWeight="SemiBold" Margin="0,8,0,0" />
+                <ComboBox x:Name="FileModeBox" HorizontalAlignment="Stretch" />
+                <TextBox x:Name="FileBox1" Watermark="File name (without “File:”)" />
+                <TextBox x:Name="FileBox2" Watermark="Replace with / comment" />
+                <CheckBox x:Name="SkipNoFileCheck" Content="Skip if no file changed" />
+
+                <TextBlock Text="Append or prepend text" FontWeight="SemiBold" Margin="0,8,0,0" />
+                <CheckBox x:Name="AppendCheck" Content="Add this text to every page" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                  <RadioButton x:Name="AppendRadio" GroupName="AppendPosition" Content="At the end" IsChecked="True" />
+                  <RadioButton x:Name="PrependRadio" GroupName="AppendPosition" Content="At the start" />
+                </StackPanel>
+                <TextBox x:Name="AppendTextBox" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="54"
+                         FontFamily="Menlo, Monaco, monospace" Watermark="Text (AWB keywords like %%title%% work)" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <TextBlock Text="Line breaks between" VerticalAlignment="Center" />
+                  <NumericUpDown x:Name="NewlinesBox" Minimum="0" Maximum="10" Value="2" Increment="1" FormatString="0" Width="110" />
+                </StackPanel>
+                <CheckBox x:Name="AppendSortCheck" Content="Sort metadata afterwards" />
+              </StackPanel>
+            </ScrollViewer>
+          </TabItem>
+          <TabItem Header="Skip" FontSize="14">
+            <StackPanel Spacing="4">
+              <CheckBox x:Name="SkipNoChangesCheck" Content="Skip if no changes" IsChecked="True" />
+              <CheckBox x:Name="SkipWhitespaceCheck" Content="Skip if only whitespace changed" />
+              <CheckBox x:Name="SkipCasingCheck" Content="Skip if only casing changed" />
+              <CheckBox x:Name="SkipGenFixesCheck" Content="Skip if only general fixes changed" />
+              <CheckBox x:Name="SkipMinorGenFixesCheck" Content="Skip if only minor general fixes changed" />
+              <CheckBox x:Name="SkipNoFarCheck" Content="Skip if no find-and-replace change" />
+              <CheckBox x:Name="SkipNoTypoCheck" Content="Skip if no typo fixed" />
+              <CheckBox x:Name="SkipNonExistentCheck" Content="Skip non-existent pages" IsChecked="True" />
+              <CheckBox x:Name="SkipRedirectCheck" Content="Skip redirects" />
+              <CheckBox x:Name="SkipInUseCheck" Content="Skip pages with {{in use}}" IsChecked="True" />
+            </StackPanel>
+          </TabItem>
+        </TabControl>
+
+        <DockPanel Margin="0,10,0,0">
+          <DockPanel DockPanel.Dock="Top" Margin="0,0,0,4">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4">
+              <Button x:Name="RemoveButton" Content="Remove" Padding="8,2" />
+              <Button x:Name="ClearButton" Content="Clear" Padding="8,2" />
+              <Button x:Name="SaveListButton" Content="Save…" Padding="8,2" />
+            </StackPanel>
+            <TextBlock x:Name="ListCountLabel" Text="Pages: 0" VerticalAlignment="Center" FontWeight="SemiBold" />
+          </DockPanel>
+          <ListBox x:Name="PageList" SelectionMode="Multiple" />
+        </DockPanel>
+      </DockPanel>
+
+      <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="Transparent" />
+
+      <!-- Right: processing and editor -->
+      <DockPanel Grid.Column="2" Margin="4,10,10,10">
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" Margin="0,0,0,8">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Default summary" VerticalAlignment="Center" Margin="0,0,8,0" />
+          <AutoCompleteBox Grid.Row="0" Grid.Column="1" x:Name="SummaryBox" Watermark="Your edit summary (required)"
+                           FilterMode="Contains" MinimumPrefixLength="0" />
+          <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="6" Margin="0,8,0,0">
+            <Button x:Name="StartButton" Content="Start" Classes="accent" ToolTip.Tip="Load the first page in the list" />
+            <Button x:Name="StopButton" Content="Stop" />
+            <Border Width="12" />
+            <Button x:Name="SaveButton" Content="Save" ToolTip.Tip="Save this page (⌘S)" />
+            <Button x:Name="SkipButton" Content="Skip" ToolTip.Tip="Skip this page (⌘I)" />
+            <Border Width="12" />
+            <Button x:Name="DiffButton" Content="Show changes" ToolTip.Tip="⌘D" />
+            <Button x:Name="PreviewButton" Content="Preview" ToolTip.Tip="Open a preview in your browser (⇧⌘P)" />
+            <Button x:Name="EditTabButton" Content="Edit text" ToolTip.Tip="⌘E" />
+            <Button x:Name="OpenPageButton" Content="Open in browser" />
+          </StackPanel>
+        </Grid>
+
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="Auto,*" Margin="0,8,0,0">
+          <TextBlock Text="This edit's summary" VerticalAlignment="Center" Margin="0,0,8,0" />
+          <TextBox Grid.Column="1" x:Name="FinalSummaryBox" Watermark="Filled in when a page is processed" />
+        </Grid>
+
+        <TextBlock DockPanel.Dock="Top" x:Name="PageTitleLabel" FontSize="17" FontWeight="SemiBold" Margin="0,0,0,6" Text="No page loaded" />
+
+        <TabControl x:Name="EditorTabs">
+          <TabItem Header="Changes" FontSize="14">
+            <local:DiffView x:Name="Diff" />
+          </TabItem>
+          <TabItem Header="Edit" FontSize="14">
+            <TextBox x:Name="EditBox" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                     FontFamily="Menlo, Monaco, monospace" FontSize="12.5" />
+          </TabItem>
+          <TabItem Header="Log" FontSize="14">
+            <ListBox x:Name="LogList" />
+          </TabItem>
+        </TabControl>
+      </DockPanel>
+    </Grid>
+  </DockPanel>
+</Window>
