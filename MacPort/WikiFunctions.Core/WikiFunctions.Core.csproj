@@ -2,7 +2,7 @@
   <!-- Mac port of the WikiFunctions engine. Source files are linked from ../../AWB/WikiFunctions,
        so the original Windows tree is untouched. Files here (Shims/) replace Windows-only pieces. -->
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>WikiFunctions</RootNamespace>
     <AssemblyName>WikiFunctions</AssemblyName>
     <LangVersion>latest</LangVersion>
@@ -17,8 +17,8 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SemanticVersion" Version="2.1.0" />
-    <PackageReference Include="System.CodeDom" Version="8.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.CodeDom" Version="10.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.0" />
   </ItemGroup>
   <ItemGroup>
     <WinSource Include="$(SrcRoot)API/ApiEdit.cs" Link="API/ApiEdit.cs" />

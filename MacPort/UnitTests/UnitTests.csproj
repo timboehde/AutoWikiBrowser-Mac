@@ -2,7 +2,7 @@
   <!-- Runs AWB's own unit tests against the Mac engine (WikiFunctions.Core). Test files are linked from
        ../../AWB/UnitTests; only MiscellaneousTests has a Mac copy, without the WinForms-control tests. -->
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>

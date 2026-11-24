@@ -2,7 +2,7 @@
 
 An unofficial native macOS version of [AutoWikiBrowser](https://en.wikipedia.org/wiki/Wikipedia:AutoWikiBrowser) (AWB), the semi-automated wiki editor.
 
-It runs AWB's own editing engine, WikiFunctions, compiled for .NET 8. That means the same general fixes, typo fixing (RegexTypoFix), find and replace, list makers, CheckPage rules and settings files as Windows AWB, with a new Mac interface built with [Avalonia](https://avaloniaui.net).
+It runs AWB's own editing engine, WikiFunctions, compiled for .NET 10. That means the same general fixes, typo fixing (RegexTypoFix), find and replace, list makers, CheckPage rules and settings files as Windows AWB, with a new Mac interface built with [Avalonia](https://avaloniaui.net).
 
 ## Installing
 
@@ -26,7 +26,7 @@ Not ported yet: plugins, move/delete/protect, disambiguation, the list filter an
 
 ## Building from source
 
-You need the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
+You need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
 
 ```sh
 cd MacPort
